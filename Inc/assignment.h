@@ -42,10 +42,10 @@
 #define	RCC_AHBENR_REG			*((volatile uint32_t *) (uint32_t)(RCC_BASE_ADDR + 0x00000014U)) //the same
 
 /* LED and button macros */
-#define LED_ON					*((volatile uint32_t *)((uint32_t)(0x48000400 + 0x18U))) |= (1 << 3); //pozor dopisat
-#define LED_OFF					*((volatile uint32_t *)((uint32_t)0x48000400 + 0x28U)) |= (1 << 3);   // pozor dopisat
+#define LED_ON					*((volatile uint32_t *)((uint32_t)(0x48000000 + 0x14U))) |= (1 << 4); //pozor dopisat
+#define LED_OFF					*((volatile uint32_t *)((uint32_t)0x48000000 + 0x14U)) &= ~(0x3 << 4);   // pozor dopisat
 
-#define BUTTON_GET_STATE		/* Add BUTTON_GET_STATE implementation here. */
+#define BUTTON_GET_STATE		(!(*((volatile uint32_t *)((uint32_t)(0x48000000 + 0x10U))) & (1 << 3)))
 
 
 #endif /* ASSIGNMENT_H_ */
