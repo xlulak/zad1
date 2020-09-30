@@ -44,10 +44,15 @@ int main(void)
   /* Enable clock for GPIO port A*/
 
 	  *((volatile uint32_t *) (uint32_t)(0x40021000 + 0x00000014U)) |= (uint32_t)(1 << 17);
+
+
 	//type your code for GPIOA clock enable here:
 
 
   /* GPIOA pin 3 and 4 setup */
+
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6);
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);
 
 	//type your code for GPIOA pins setup here:
 
