@@ -51,25 +51,25 @@ int main(void)
 
   /* GPIOA pin 3 and 4 setup */
 	  //pin 3 tlacidlo 00 je rdy na Input
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
-	   // *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);	//zapisem 1
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
+	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
+	   // *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 6);	//zapisem 1
+	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
+	   *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
 
 	//type your code for GPIOA pins setup here:
 
 	   /*GPIO OTYPER register*/
-	     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x04U))) &= ~(1 << 4);
+	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x04U))) &= ~(1 << 4);
 
 	   /*GPIO OSPEEDR register*/
 	       //Set Low speed for GPIOA pin 4
-	     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x08U))) &= ~(0x3 << 8);
+	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x08U))) &= ~(0x3 << 8);
 
 	     /*GPIO PUPDR register, reset*/
 	       //Set pull up for GPIOB pin 3 (input)
-	       *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x0CU))) |= (1 << 6);
+	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) |= (1 << 6);
 	       //Set no pull for GPIOB pin 4
-	       *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x0CU))) &= ~(0x3 << 8);
+	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) &= ~(0x3 << 8);
   while (1)
   {
 	  if(BUTTON_GET_STATE)
