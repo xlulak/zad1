@@ -65,6 +65,11 @@ int main(void)
 	       //Set Low speed for GPIOA pin 4
 	     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x08U))) &= ~(0x3 << 8);
 
+	     /*GPIO PUPDR register, reset*/
+	       //Set pull up for GPIOB pin 3 (input)
+	       *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x0CU))) |= (1 << 6);
+	       //Set no pull for GPIOB pin 4
+	       *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x0CU))) &= ~(0x3 << 8);
   while (1)
   {
 	  if(BUTTON_GET_STATE)
