@@ -43,7 +43,7 @@
 
 /* LED and button macros */
 #define LED_ON					*((volatile uint32_t *)((uint32_t)(0x48000000 + 0x14U))) |= (1 << 4); //pozor dopisat
-#define LED_OFF					*((volatile uint32_t *)((uint32_t)0x48000000 + 0x14U)) &= ~(0x3 << 4);   // pozor dopisat
+#define LED_OFF					*((volatile uint32_t *)((uint32_t)0x48000000 + 0x14U)) &= ~(1 << 4);   // pozor dopisat
 
 #define BUTTON_GET_STATE		(!(*((volatile uint32_t *)((uint32_t)(0x48000000 + 0x10U))) & (1 << 3)))
 
