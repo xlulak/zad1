@@ -53,11 +53,17 @@ int main(void)
 	  //pin 3 tlacidlo 00 je rdy na Input
 	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
 	   // *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);	//zapisem 1
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 8); //vyresetujem
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 8);	//zapisem 1
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
 
 	//type your code for GPIOA pins setup here:
 
+	   /*GPIO OTYPER register*/
+	     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x04U))) &= ~(1 << 4);
+
+	   /*GPIO OSPEEDR register*/
+	       //Set Low speed for GPIOA pin 4
+	     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x08U))) &= ~(0x3 << 8);
 
   while (1)
   {
