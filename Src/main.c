@@ -50,9 +50,11 @@ int main(void)
 
 
   /* GPIOA pin 3 and 4 setup */
-
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6);
-	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);
+	  //pin 3 tlacidlo 00 je rdy na Input
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
+	   // *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);	//zapisem 1
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 8); //vyresetujem
+	   *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 8);	//zapisem 1
 
 	//type your code for GPIOA pins setup here:
 
