@@ -43,6 +43,7 @@ int main(void)
 
   /* Enable clock for GPIO port A*/
 
+	  *((volatile uint32_t *) (uint32_t)(0x40021000 + 0x00000014U)) |= (uint32_t)(1 << 17);
 	//type your code for GPIOA clock enable here:
 
 
