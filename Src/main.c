@@ -70,24 +70,31 @@ int main(void)
 	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) |= (1 << 6);
 	       //Set no pull for GPIOB pin 4
 	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) &= ~(0x3 << 8);
-  while (1)
+
+	       LL_Init1msTick(SystemCoreClock);  // nastavenie INIT ticku...podla frekvencie procesora
+
+	       while (1)
   {
 
 
-
-
-
-	  if(BUTTON_GET_STATE)
-	  {
-
-		  LED_OFF;
-	  }
-	  else
-	  {
-
-
-		  LED_ON;
-	  }
+	    	   if(BUTTON_GET_STATE)
+	    	   	  {
+	    	   		  // 0.25s delay
+	    	   		  LL_mDelay(250);
+	    	   		  LED_ON;
+	    	   		  // 0.25s delay
+	    	   		  LL_mDelay(250);
+	    	   		  LED_OFF;
+	    	   	  }
+	    	   	  else
+	    	   	  {
+	    	   		  // 1s delay
+	    	   		  LL_mDelay(1000);
+	    	   		  LED_ON;
+	    	   		  // 1s delay
+	    	   		  LL_mDelay(1000);
+	    	   		  LED_OFF;
+	    	   	  }
   }
 
 }
