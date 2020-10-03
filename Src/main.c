@@ -43,7 +43,7 @@ int main(void)
 
   /* Enable clock for GPIO port A*/
 
-	  *((volatile uint32_t *) (uint32_t)(0x40021000 + 0x00000014U)) |= (uint32_t)(1 << 17);
+		RCC_AHBENR_REG |= (uint32_t)(1 << 17);
 
 
 	//type your code for GPIOA clock enable here:
@@ -51,25 +51,24 @@ int main(void)
 
   /* GPIOA pin 3 and 4 setup */
 	  //pin 3 tlacidlo 00 je rdy na Input
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
-	   // *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 6);	//zapisem 1
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
+		GPIOA_MODER_REG	 &= ~(uint32_t)(0x3 << 6); //vyresetujem
 
-	//type your code for GPIOA pins setup here:
+		GPIOA_MODER_REG	 &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
+		GPIOA_MODER_REG	 |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
+
 
 	   /*GPIO OTYPER register*/
-	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x04U))) &= ~(1 << 4);
+		GPIOA_OTYPER_REG &= ~(1 << 4);
 
 	   /*GPIO OSPEEDR register*/
 	       //Set Low speed for GPIOA pin 4
-	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x08U))) &= ~(0x3 << 8);
+		GPIOA_OSPEEDER_REG &= ~(0x3 << 8);
 
 	     /*GPIO PUPDR register, reset*/
 	       //Set pull up for GPIOB pin 3 (input)
-	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) |= (1 << 6);
+		GPIOA_PUPDR_REG	 |= (1 << 6);
 	       //Set no pull for GPIOB pin 4
-	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) &= ~(0x3 << 8);
+		GPIOA_PUPDR_REG	 &= ~(0x3 << 8);
 
 	       LL_Init1msTick(SystemCoreClock);  // nastavenie INIT ticku...podla frekvencie procesora
 
