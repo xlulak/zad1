@@ -41,95 +41,94 @@ int main(void)
    */
 
 
-  /* Enable clock for GPIO port A*/
+	/* Enable clock for GPIO port A*/
 
-	  *((volatile uint32_t *) (uint32_t)(0x40021000 + 0x00000014U)) |= (uint32_t)(1 << 17);
-
-
-	//type your code for GPIOA clock enable here:
+			RCC_AHBENR_REG |= (uint32_t)(1 << 17);
 
 
-  /* GPIOA pin 3 and 4 setup */
-	  //pin 3 tlacidlo 00 je rdy na Input
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 6); //vyresetujem
-	   // *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 6);	//zapisem 1
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
-	   *((volatile uint32_t *)((uint32_t)0x48000000)) |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
-
-	//type your code for GPIOA pins setup here:
-
-	   /*GPIO OTYPER register*/
-	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x04U))) &= ~(1 << 4);
-
-	   /*GPIO OSPEEDR register*/
-	       //Set Low speed for GPIOA pin 4
-	     *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x08U))) &= ~(0x3 << 8);
-
-	     /*GPIO PUPDR register, reset*/
-	       //Set pull up for GPIOB pin 3 (input)
-	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) |= (1 << 6);
-	       //Set no pull for GPIOB pin 4
-	       *((volatile uint32_t *)((uint32_t)(0x48000000 + 0x0CU))) &= ~(0x3 << 8);
-
-	       LL_Init1msTick(SystemCoreClock);  // nastavenie INIT ticku...podla frekvencie procesora
-
-	       while (1)
-  {
+		//type your code for GPIOA clock enable here:
 
 
-	    	   if(BUTTON_GET_STATE)
-	    	   	  {
-	    	   		  // 0.25s delay
-	    	   		  LL_mDelay(250);
-	    	   		  LED_ON;
-	    	   		  // 0.25s delay
-	    	   		  LL_mDelay(250);
-	    	   		  LED_OFF;
-	    	   	  }
-	    	   	  else
-	    	   	  {
-	    	   		  // 1s delay
-	    	   		  LL_mDelay(1000);
-	    	   		  LED_ON;
-	    	   		  // 1s delay
-	    	   		  LL_mDelay(1000);
-	    	   		  LED_OFF;
-	    	   	  }
-  }
+	  /* GPIOA pin 3 and 4 setup */
+		  //pin 3 tlacidlo 00 je rdy na Input
+			GPIOA_MODER_REG	 &= ~(uint32_t)(0x3 << 6); //vyresetujem
 
-}
+			GPIOA_MODER_REG	 &= ~(uint32_t)(0x3 << 8); //vyresetujem 4 pin pre istotu
+			GPIOA_MODER_REG	 |= (uint32_t)(1 << 8);	//zapisem 1 aby bolo 01 general purpose output mode
 
-/* USER CODE BEGIN 4 */
 
-/* USER CODE END 4 */
+		   /*GPIO OTYPER register*/
+			GPIOA_OTYPER_REG &= ~(1 << 4);
 
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+		   /*GPIO OSPEEDR register*/
+		       //Set Low speed for GPIOA pin 4
+			GPIOA_OSPEEDER_REG &= ~(0x3 << 8);
 
-  /* USER CODE END Error_Handler_Debug */
-}
+		     /*GPIO PUPDR register, reset*/
+		       //Set pull up for GPIOB pin 3 (input)
+			GPIOA_PUPDR_REG	 |= (1 << 6);
+		       //Set no pull for GPIOB pin 4
+			GPIOA_PUPDR_REG	 &= ~(0x3 << 8);
 
-#ifdef  USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(char *file, uint32_t line)
-{ 
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
-#endif /* USE_FULL_ASSERT */
+		       LL_Init1msTick(SystemCoreClock);  // nastavenie INIT ticku...podla frekvencie procesora
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+		       while (1)
+	  {
+
+
+		    	   if(BUTTON_GET_STATE)
+		    	   	  {
+		    	   		  // 0.25s delay
+		    	   		  LL_mDelay(250);
+		    	   		  LED_ON;
+		    	   		  // 0.25s delay
+		    	   		  LL_mDelay(250);
+		    	   		  LED_OFF;
+		    	   	  }
+		    	   	  else
+		    	   	  {
+		    	   		  // 1s delay
+		    	   		  LL_mDelay(1000);
+		    	   		  LED_ON;
+		    	   		  // 1s delay
+		    	   		  LL_mDelay(1000);
+		    	   		  LED_OFF;
+		    	   	  }
+	  }
+
+	}
+
+	/* USER CODE BEGIN 4 */
+
+	/* USER CODE END 4 */
+
+	/**
+	  * @brief  This function is executed in case of error occurrence.
+	  * @retval None
+	  */
+	void Error_Handler(void)
+	{
+	  /* USER CODE BEGIN Error_Handler_Debug */
+	  /* User can add his own implementation to report the HAL error return state */
+
+	  /* USER CODE END Error_Handler_Debug */
+	}
+
+	#ifdef  USE_FULL_ASSERT
+	/**
+	  * @brief  Reports the name of the source file and the source line number
+	  *         where the assert_param error has occurred.
+	  * @param  file: pointer to the source file name
+	  * @param  line: assert_param error line source number
+	  * @retval None
+	  */
+	void assert_failed(char *file, uint32_t line)
+	{
+	  /* USER CODE BEGIN 6 */
+	  /* User can add his own implementation to report the file name and line number,
+	     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+	  /* USER CODE END 6 */
+	}
+	#endif /* USE_FULL_ASSERT */
+
+	/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
